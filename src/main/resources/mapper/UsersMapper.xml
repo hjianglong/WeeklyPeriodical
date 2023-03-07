@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.weeklyperiodical.mapper.UsersMapper">
+
+    <!-- int insert(Users users); -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO users (
+            schoole,username, password, beforepwd, model,selclassify,enable
+        ) VALUES (
+                     #{schoole}, #{username}, #{password}, #{beforepwd},
+                     #{model}, #{selclassify}, #{enable}
+                 )
+    </insert>
+
+    <!-- int insertBatch(List<Users> usersList); -->
+    <insert id="insertBatch" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO users (
+        schoole,username, password, beforepwd, model,selclassify, enable
+
+        ) VALUES
+        <foreach collection="list" item="users" separator=",">
+            (
+            #{schoole}, #{username}, #{password}, #{beforepwd},
+            #{model}, #{selclassify}#{enable}
+            )
+        </foreach>
+    </insert>
+
+    <!-- int deleteById(Long id); -->
+    <delete id="deleteById">
+        DELETE FROM users WHERE Uid=#{Uid}
+    </delete>
+
+    <!-- int deleteByIds(Long[] ids); -->
+    <delete id="deleteByIds">
+        DELETE FROM users WHERE Uid IN (
+        <foreach collection="array" item="Uid" separator=",">
+            #{Uid}
+        </foreach>
+        )
+    </delete>
+
+    <!-- int update(Users users); -->
+    <update id="update">
+        UPDATE users
+        <set>
+            <if test="schoole != null">
+                schoole=#{schoole},
+            </if>
+            <if test="username != null">
+                username=#{username},
+            </if>
+            <if test="password != null">
+                password=#{password},
+            </if>
+            <if test="beforepwd != null">
+                beforepwd=#{beforepwd},
+            </if>
+            <if test="model != null">
+                model=#{model},
+            </if>
+            <if test="selclassify != null">
+                selclassify=#{selclassify},
+            </if>
+            <if test="enable != null">
+                enable=#{enable},
+            </if>
+        </set>
+        WHERE uid=#{uid}
+    </update>
+
+    <!-- int count(); -->
+    <select id="count" resultType="int">
+        SELECT count(*) FROM users
+    </select>
+
+    <!-- int countByUsername(String username); -->
+    <select id="countByUsername" resultType="int">
+        SELECT count(*) FROM users WHERE username=#{username}
+    </select>
+
+    <!--UsersStandardVO getStandardById(Long id);-->
+    <select id="getStandardById" resultMap="StandardResultMap">
+        SELECT
+        <include refid="StandardQueryFields"/>
+        FROM
+        users
+        WHERE
+        uid=#{uid}
+    </select>
+
+    <!--UsersLoginInfoVo getLoginInfoByUsername(String username);-->
+    <select id="getLoginInfoByUsername" resultMap="LoginInfoResultMap">
+        SELECT
+        <include refid="LoginInfoQueryFields"/>
+        FROM
+        users
+        LEFT JOIN usersrole ON users.uid=usersrole.usersid
+        LEFT JOIN rolepermission ON usersrole.roleid=rolepermission.roleid
+        LEFT JOIN permission ON rolepermission.permissionid=permission.id
+        WHERE
+        username=#{username}
+    </select>
+
+    <!--List<UsersListItemVO> list();-->
+    <!-- List<AdminListItemVO> list(); -->
+    <select id="list" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM
+        users
+        ORDER BY
+        uid
+    </select>
+
+    <resultMap id="StandardResultMap" type="com.example.weeklyperiodical.pojo.vo.UsersStandardVO">
+        <id column="uid" property="uid"/>
+        <result column="schoole" property="schoole"/>
+        <result column="username" property="username"/>
+        <result column="beforepwd" property="beforepwd"/>
+        <result column="model" property="model"/>
+        <result column="selclassify" property="selclassify"/>
+        <result column="enable" property="enable"/>
+    </resultMap>
+
+    <sql id="StandardQueryFields">
+        <if test="true">
+            uid, schoole, username, beforepwd, model, selclassify, enable
+        </if>
+    </sql>
+
+    <sql id="LoginInfoQueryFields">
+        <if test="true">
+            users.uid,
+            users.username,
+            users.password,
+            users.enable,
+            permission.value
+        </if>
+    </sql>
+
+    <resultMap id="LoginInfoResultMap" type="com.example.weeklyperiodical.pojo.vo.UsersLoginInfoVo">
+        <id column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="enable" property="enable"/>
+        <collection property="permissions" ofType="java.lang.String">
+            <constructor>
+                <arg column="value"/>
+            </constructor>
+        </collection>
+    </resultMap>
+
+    <resultMap id="ListResultMap" type="com.example.weeklyperiodical.pojo.vo.UsersListItemVO">
+        <id column="uid" property="uid"/>
+        <result column="schoole" property="schoole"/>
+        <result column="username" property="username"/>
+        <result column="beforepwd" property="beforepwd"/>
+        <result column="model" property="model"/>
+        <result column="selclassify" property="selclassify"/>
+        <result column="enable" property="enable"/>
+    </resultMap>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            uid, schoole, username, beforepwd, model,
+            selclassify, enable
+        </if>
+    </sql>
+
+
+
+
+
+
+
+
+
+</mapper>

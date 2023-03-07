@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.weeklyperiodical.mapper.PeriodicalMapper">
+
+    <!--List<Periodical> list();-->
+    <select id="list" resultMap="ListResultMap">
+        select * from (select distinct * from periodical order by `qs`desc) a group by title order by qs+0 desc
+    </select>
+
+    <!--Periodical getStandardByPeriod(String period);-->
+    <select id="getStandardByPeriod" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM periodical
+        where period=#{period}
+    </select>
+
+    <!--List<Periodical> getStandardBytitle (String title);-->
+    <select id="getStandardBytitle" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM periodical
+        where title=#{title}
+    </select>
+
+    <!--List<Periodical> getStandardBysponsor(String sponsor);-->
+    <select id="getStandardBysponsor" resultMap="ListResultMap">
+        SELECT
+        <include refid="ListQueryFields"/>
+        FROM periodical
+        where sponsor=#{sponsor}
+    </select>
+
+    <sql id="ListQueryFields">
+        <if test="true">
+            id, period, indeximg,sponsor,title,synopsis,createyear,cbd,qs,bdb,zjmc,ztmc
+        </if>
+    </sql>
+
+    <resultMap id="ListResultMap" type="com.example.weeklyperiodical.pojo.entity.Periodical">
+        <id column="id" property="id"/>
+        <result column="period" property="period"/>
+        <result column="IndexImg" property="IndexImg"/>
+        <result column="sponsor" property="sponsor"/>
+        <result column="title" property="title"/>
+        <result column="synopsis" property="synopsis"/>
+        <result column="createyear" property="createyear"/>
+        <result column="cbd" property="cbd"/>
+        <result column="qs" property="qs"/>
+        <result column="bdb" property="bdb"/>
+        <result column="zjmc" property="zjmc"/>
+        <result column="ztmc" property="ztmc"/>
+    </resultMap>
+
+    <!--String getTitleQs(String title , String qs);-->
+    <select id="getTitleQs" resultType="String">
+        SELECT
+        img
+        FROM periodical
+        where title=#{title} and qs=#{qs}
+    </select>
+
+    <!--String getTitleQsBdb(String title , String qs);-->
+    <select id="getTitleQsBdb" resultType="String">
+        SELECT
+            bdb
+        FROM periodical
+        where title=#{title} and qs=#{qs}
+    </select>
+
+    <!--String getMulu(String mgzname , String qs);-->
+    <select id="getMulu" resultType="String">
+        SELECT
+            mulu
+        FROM periodicaldata
+        where mgzname=#{mgzname} and qs=#{qs}
+    </select>
+
+    <!--String getTitle (String mulu);-->
+    <select id="getTitle" resultType="String">
+        SELECT
+            title
+        FROM periodicaldata
+        where mulu=#{mulu}
+    </select>
+
+    <!--String getText (String mulu);-->
+    <select id="getText" resultType="String">
+        SELECT
+             text
+        FROM periodicaldata
+        where mulu=#{mulu}
+    </select>
+
+    <!--List<PeriodicaDataVO> listTitle ();-->
+    <select id="listTitle" resultType="com.example.weeklyperiodical.pojo.vo.PeriodicaDataVO">
+#         select * from (select distinct * from periodicaldata order by `qs`desc) a group by title order by qs+0 desc
+          select title from periodicaldata order by qs+0 desc
+    </select>
+
+    <!--String getTitleText(String title);-->
+    <select id="getTitleText" resultType="String">
+        SELECT
+            text
+        FROM periodicaldata
+        where title=#{title}
+    </select>
+
+
+
+</mapper>
