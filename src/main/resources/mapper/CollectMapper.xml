@@ -12,4 +12,28 @@
                  )
     </insert>
 
+    <!--int delectById(String username,String collectlink);-->
+    <delete id="delectById">
+        delete from collect where username=#{username} and collectlink=#{collectlink}
+    </delete>
+
+    <!--int delectByUsername(String username);-->
+    <delete id="delectByUsername">
+        delete from collect where username=#{username}
+    </delete>
+
+    <!--List<CollectVO> listUsername(String username);-->
+    <select id="listUsername" resultType="com.example.weeklyperiodical.pojo.vo.CollectVO">
+        select * from collect where username=#{username}
+    </select>
+
+    <!--List<CollectVO> list();-->
+    <select id="list" resultType="com.example.weeklyperiodical.pojo.vo.CollectVO">
+        select * from collect
+    </select>
+
+
+
+
+
 </mapper>

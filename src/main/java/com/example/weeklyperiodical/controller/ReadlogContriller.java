@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 @RequestMapping("/Readlog")
-@Api(tags = "03. 用户浏览记录模块")
+@Api(tags = "04. 用户浏览记录模块")
 public class ReadlogContriller {
 
     @Autowired

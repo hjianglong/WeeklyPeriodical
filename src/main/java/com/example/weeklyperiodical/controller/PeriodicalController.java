@@ -111,9 +111,6 @@ public class PeriodicalController {
         return JsonResult.ok(text);
     }
 
-
-
-
     @ApiOperation("查询期刊列表(去重)")
     @ApiOperationSupport(order = 600)
     @GetMapping("")
