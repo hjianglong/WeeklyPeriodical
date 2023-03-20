@@ -4,14 +4,12 @@ import com.example.weeklyperiodical.ex.ServiceException;
 import com.example.weeklyperiodical.mapper.CollectMapper;
 import com.example.weeklyperiodical.pojo.entity.Collect;
 import com.example.weeklyperiodical.pojo.vo.CollectVO;
-import com.example.weeklyperiodical.pojo.vo.UsersListItemVO;
 import com.example.weeklyperiodical.service.ICollectService;
 import com.example.weeklyperiodical.web.ServiceCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 
 @Slf4j

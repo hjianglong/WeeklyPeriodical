@@ -1,6 +1,7 @@
 package com.example.weeklyperiodical.mapper;
 
 import com.example.weeklyperiodical.pojo.entity.Periodical;
+import com.example.weeklyperiodical.pojo.vo.PeriodicaDataQueryVO;
 import com.example.weeklyperiodical.pojo.vo.PeriodicaDataVO;
 import com.example.weeklyperiodical.pojo.vo.PeriodicalVO;
 import org.springframework.stereotype.Repository;
@@ -88,6 +89,19 @@ public interface PeriodicalMapper {
      */
     String getTitleText(String title);
 
+    /**
+     * 普通查询
+     * @param query
+     * @return
+     */
+    List<Periodical> Generalquery(String query);
+
+    /**
+     * 高级查询
+     * @param query
+     * @return
+     */
+    List<PeriodicaDataQueryVO> Advancedquery(String query);
 
 
 

@@ -3,6 +3,7 @@ package com.example.weeklyperiodical.service.Impl;
 import com.example.weeklyperiodical.ex.ServiceException;
 import com.example.weeklyperiodical.mapper.PeriodicalMapper;
 import com.example.weeklyperiodical.pojo.entity.Periodical;
+import com.example.weeklyperiodical.pojo.vo.PeriodicaDataQueryVO;
 import com.example.weeklyperiodical.pojo.vo.PeriodicaDataVO;
 import com.example.weeklyperiodical.pojo.vo.PeriodicalVO;
 import com.example.weeklyperiodical.pojo.vo.RoleListItemVO;
@@ -152,6 +153,32 @@ public class IPeriodicalServiceImpl implements IPeriodicalService {
         }
         log.debug("即将返回正文：{}", mee);
         return mee;
+    }
+
+    @Override
+    public List<Periodical> Generalquery(String query) {
+        log.debug("开始处理【普通查询】的业务，参数:{},",query);
+        List<Periodical> list= periodicalMapper.Generalquery(query);
+        if (list == null) {
+            String message = "普通查询失败，尝试访问的数据不存在！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
+        log.debug("即将返回普通查询：{}", list);
+        return list;
+    }
+
+    @Override
+    public List<PeriodicaDataQueryVO> Advancedquery(String query) {
+        log.debug("开始处理【高级查询】的业务，参数:{},",query);
+        List<PeriodicaDataQueryVO> list= periodicalMapper.Advancedquery(query);
+        if (list == null) {
+            String message = "高级查询失败，尝试访问的数据不存在！";
+            log.warn(message);
+            throw new ServiceException(ServiceCode.ERR_NOT_FOUND, message);
+        }
+        log.debug("即将返回高级查询：{}", list);
+        return list;
     }
 
 }

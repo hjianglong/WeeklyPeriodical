@@ -1,11 +1,12 @@
-package com.example.weeklyperiodical.pojo.entity;
+package com.example.weeklyperiodical.pojo.vo;
 
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class PeriodicaData implements Serializable {
+public class PeriodicaDataQueryVO implements Serializable {
+
     private Long id;
     private String mgzname;
     private Long qkid;
@@ -13,9 +14,5 @@ public class PeriodicaData implements Serializable {
     private String mulu;
     private String title;
     private String text;
-    private String mgztime;
-    private String inittime;
-
 
 }
-

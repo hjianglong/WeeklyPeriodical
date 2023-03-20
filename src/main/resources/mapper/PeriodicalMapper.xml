@@ -107,6 +107,18 @@
         where title=#{title}
     </select>
 
+    <!--List<Periodical> Generalquery(String query);-->
+    <select id="Generalquery" resultType="com.example.weeklyperiodical.pojo.entity.Periodical">
+        select *
+        from periodical
+        where concat(id,period,IndexImg,sponsor,title,synopsis,createyear,cbd,qs,bdb,img,zjmc,ztmc) like concat('%',#{query},'%');
+    </select>
 
+    <!--List<PeriodicaDataQueryVO> Advancedquery(String query);-->
+    <select id="Advancedquery" resultType="com.example.weeklyperiodical.pojo.vo.PeriodicaDataQueryVO">
+        select *
+        from periodicaldata
+        where concat(id,mgzname,qkid,qs,mulu,title,text) like concat('%',#{query},'%');
+    </select>
 
 </mapper>

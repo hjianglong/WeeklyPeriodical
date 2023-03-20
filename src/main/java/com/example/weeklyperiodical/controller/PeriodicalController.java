@@ -1,6 +1,7 @@
 package com.example.weeklyperiodical.controller;
 
 import com.example.weeklyperiodical.pojo.entity.Periodical;
+import com.example.weeklyperiodical.pojo.vo.PeriodicaDataQueryVO;
 import com.example.weeklyperiodical.pojo.vo.PeriodicaDataVO;
 import com.example.weeklyperiodical.service.IPeriodicalService;
 import com.example.weeklyperiodical.web.JsonResult;
@@ -126,6 +127,24 @@ public class PeriodicalController {
     public JsonResult listTitle() {
         log.debug("开始处理【查询期刊列表】的请求，无参数");
         List<PeriodicaDataVO> list = periodicalService.listTitle();
+        return JsonResult.ok(list);
+    }
+
+    @ApiOperation("普通查询")
+    @ApiOperationSupport(order = 700)
+    @GetMapping("GeneralQuery")
+    public JsonResult Generalquery(String query) {
+        log.debug("开始处理【普通查询】的请求，参数:",query);
+        List<Periodical> list = periodicalService.Generalquery(query);
+        return JsonResult.ok(list);
+    }
+
+    @ApiOperation("高级查询")
+    @ApiOperationSupport(order = 750)
+    @GetMapping("Advancedquery")
+    public JsonResult Advancedquery(String query) {
+        log.debug("开始处理【高级查询】的请求，参数:",query);
+        List<PeriodicaDataQueryVO> list = periodicalService.Advancedquery(query);
         return JsonResult.ok(list);
     }
 
